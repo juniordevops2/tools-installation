@@ -1,0 +1,32 @@
+======== SSH Connection between master to client server ========
+===(Client server)===
+useradd devops 
+passwd devops 
+visudo (or)  vim /etc/sudoers
+    devops    ALL=(ALL)    ALL 
+sudo su - devops
+sudo vim /etc/ssh/sshd_config
+     1.PermitRootLogin = yes
+     2.PubKeyAuthentication = yes
+     3.PasswordAuthentication = yes
+  (check that above 3 statements on sshd_config file)
+sudo service sshd restart
+
+===(Master server)===
+useradd devops 
+passwd devops 
+visudo (or)  vim /etc/sudoers
+    devops    ALL=(ALL)    ALL 
+sudo su - devops
+sudo vim /etc/ssh/sshd_config
+     1.PermitRootLogin = yes
+     2.PubKeyAuthentication = yes
+     3.PasswordAuthentication = yes
+  (check that above 3 statements on sshd_config file)
+sudo service sshd restart
+ssh-keygen -t rsa 
+ssh-copy-id devops@(client IP)
+ssh devops@(client IP)
+
+
+============================================================================= THE END ================================================================================
