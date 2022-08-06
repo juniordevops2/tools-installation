@@ -1,0 +1,55 @@
+=============== Maven Installation ===============
+cd /opt               (opt --> it’s the place to install the services)
+sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+sudo tar –xvf apache-maven-3.8.6-bin.tar.gz
+sudo mv apache-maven-3.8.6 maven3	        --> Command for Rename
+sudo chown -R ec2-user:ec2-user maven3
+cd /opt/maven/bin
+vi  ~/.bashrc
+       --> After if statement 
+                   export  PATH=/opt/maven3/bin:$PATH
+         (Add that above line to the file)
+source  ~/.bashrc
+mvn  --version
+
+
+=============== Ansible Installation ===============
+cd /opt
+amazon-linux-extras install epel  -y
+yum update -y
+yum install ansible -y
+cd /etc/ansible 
+vim hosts              ---> This is the host file where u get target that automation via the ansible-playbook, which contains host IP.
+
+======== Connection between Ansible master to client ========
+===(Ansible-Client server)===
+useradd devops 
+passwd devops 
+visudo (or)  vim /etc/sudoers
+    devops    ALL=(ALL)    ALL 
+sudo su - devops
+sudo vim /etc/ssh/sshd_config
+     1.PermitRootLogin = yes
+     2.PubKeyAuthentication = yes
+     3.PasswordAuthentication = yes
+  (check that above 3 statements on sshd_config file)
+sudo service sshd restart
+
+===(Ansible-Master server)===
+useradd devops 
+passwd devops 
+visudo (or)  vim /etc/sudoers
+    devops    ALL=(ALL)    ALL 
+sudo su - devops
+sudo vim /etc/ssh/sshd_config
+     1.PermitRootLogin = yes
+     2.PubKeyAuthentication = yes
+     3.PasswordAuthentication = yes
+  (check that above 3 statements on sshd_config file)
+sudo service sshd restart
+ssh-keygen -t rsa 
+ssh-copy-id devops@(client IP)
+ssh devops@(client IP)
+
+
+============================================================================= THE END ================================================================================
